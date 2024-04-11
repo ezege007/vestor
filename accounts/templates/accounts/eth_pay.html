@@ -1,0 +1,113 @@
+{% extends 'home/base.html' %}
+
+{% block content %}
+    <title>Ethereum Payment Instructions</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .ethereum-address {
+            background-color: #f5f5f5;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+
+        .ethereum-address:hover {
+            background-color: #e0e0e0;
+        }
+
+        .button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        @media only screen and (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Ethereum Payment Instructions</h1>
+        <img src="https://s3.tebi.io/coinvestor/assets/img/ethereum.png" alt="Ethereum Image">
+        <p>To make an Ethereum payment, please follow these instructions:</p>
+        <ol>
+            <li>Open your Ethereum wallet app or website.</li>
+            <li>Click on the "Send" or "Pay" button.</li>
+            <li>Copy the Ethereum address below:</li>
+            <div class="ethereum-address" onclick="copyEthereumAddress()">
+                djfhjfjfnjnjafnjdsfbefn32984bfbf3e23
+            </div>
+            <li>Paste the copied Ethereum address into the recipient field.</li>
+            <li>Enter the amount you wish to pay.</li>
+            <li>Review the transaction details and confirm the payment.</li>
+            <li>Send your payment proof for confirmation to CoinvestorTrader email for confirmation which takes 24 hours</li>
+        </ol>
+        <button href="{% url 'accounts:make_deposit' %}" class="btn button" onclick="donePayment()">Done Payment</button>
+    </div>
+
+    <script>
+        function copyEthereumAddress() {
+            var ethereumAddress = document.querySelector('.ethereum-address');
+            var textArea = document.createElement('textarea');
+            textArea.value = ethereumAddress.textContent.trim();
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            alert('Ethereum address copied to clipboard!');
+        }
+
+        function donePayment() {
+        // Display success message
+        alert('Payment done successfully wait for confirmation.');
+        
+        // Wait for 2 seconds (2000 milliseconds)
+        setTimeout(function() {
+            // Redirect to the specified URL
+            window.location.href = "{% url 'accounts:make_deposit' %}";
+        }, 2000);
+    }
+    </script>
+</body>
+
+{% endblock %}

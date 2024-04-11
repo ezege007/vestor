@@ -1,0 +1,31 @@
+{% extends 'home/base.html' %}
+
+{% block content %}
+{% load crispy_forms_tags %}
+<section class="section-spacing" id="make-deposit">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="section-title text-center">
+                    <h2>Make a Deposit</h2>
+                    <p>Deposit funds into your cryptocurrency investment account to start trading and investing.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <form method="post" class="deposit-form">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="amount">Enter Amount you paid (in USD):</label>
+                        <input type="number" id="amount" name="amount" step="0.0001" min="0.0001" required class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Deposit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

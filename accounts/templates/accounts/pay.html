@@ -1,0 +1,97 @@
+{% extends 'home/base.html' %}
+
+{% block content %}
+
+    <title>Payment Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        .containerd {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .payment-box {
+            width: calc(50% - 40px);
+            margin: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+        }
+        .payment-box img {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 20px;
+        }
+        h2 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container my-5">
+        <div class="row justify-content-center">
+
+    <div class="containerd">
+        <div class="cryptohopper-web-widget" data-id="6"></div>
+        <div class="payment-box">
+            <img src="https://s3.tebi.io/coinvestor/assets/img/bitcoin.png" alt="Bitcoin">
+            <h2>Bitcoin</h2>
+            <form action="{% url 'accounts:bit_pay' %}" method="get">
+                <button type="submit" class="btn btn-outline-primary btn-sm form-button">Pay with Bitcoin</button>
+            </form>
+
+        </div>
+        <div class="payment-box">
+            <img src="https://s3.tebi.io/coinvestor/assets/img/ethereum.png" alt="Ethereum">
+            <h2>Ethereum</h2>
+            <form action="{% url 'accounts:eth_pay' %}" method="get">
+                <button type="submit" class="btn btn-outline-primary btn-sm form-button">Pay with Ethereum</button>
+            </form>
+            
+        </div>
+        
+        <div class="payment-box">
+            <img src="https://s3.tebi.io/coinvestor/assets/img/usdt.png" alt="USDT">
+            <h2>USDT</h2>
+            <form action="{% url 'accounts:usdt_pay' %}" method="get">
+                <button type="submit" class="btn btn-outline-primary btn-sm form-button">Pay with USDT</button>
+            </form>
+        </div>
+        <div class="payment-box">
+            <img src="https://s3.tebi.io/coinvestor/assets/img/deposit.png" alt="Bank Deposit">
+            <h2>Bank Deposit / others</h2>
+            <form action="{% url 'accounts:bank_pay' %}" method="get">
+                <button type="submit" class="btn btn-outline-primary btn-sm form-button">Pay with Bank Deposit</button>
+            </form>></button>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>
+{% endblock %}
+

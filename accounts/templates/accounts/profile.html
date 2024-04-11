@@ -1,0 +1,126 @@
+{% extends 'home/base.html' %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        .blue-box {
+            background-color: #5053ff;
+            color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px; /* Added margin bottom for spacing */
+        }
+        p {
+            color: white; /* Set the color of <p> tags to white */
+            margin-bottom: 5px; /* Added margin bottom for spacing */
+        }
+        h4,h6{
+            color: antiquewhite;
+            margin-bottom: 10px; /* Added margin bottom for spacing */
+        }
+        .form-button {
+            margin-top: 10px; /* Added margin top for spacing */
+        }
+        .blink {
+            animation: blinker 1s linear infinite;
+        }
+        .available {
+            color: green !important;
+            animation: none;
+        }
+        @keyframes blinker {
+            50% {
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        {% if show_message %}
+            <div class="alert alert-warning mt-3" role="alert">
+                Please choose a plan and make a deposit.
+            </div>
+        {% endif %}
+        <h3>Hello, {{ last_name }}!</h3> <!-- Added exclamation mark for emphasis -->
+        <h1 class="mb-4">DASHBOARD</h1> <!-- Added margin bottom for spacing -->
+        <div class="row mt-3">
+            <div class="col-md-6">
+                <div class="blue-box">
+                    <h2>User Account: {{ user_profile.user.username }}</h2>
+
+                    {% if user_accounts.transaction == 'Available' %}
+                        <h4>Deposit balance: ${{ user_accounts.deposit }}</h4>
+                    {% else %}
+                        <h4 class="blink" >Deposit balance: ${{ user_accounts.deposit }}</h4>
+                    {% endif %}
+                    <h6>Interest: ${{ user_accounts.interest }}</h6>
+
+                    {% if user_accounts.transaction == 'Available' %}
+                        <button class="btn btn-sm btn-success">{{ user_accounts.transaction }}</button>
+                    {% else %}
+                        <button class="btn btn-sm btn-danger blink">{{ user_accounts.transaction }}</button>
+                        <h6>your deposit has not yet been processed,Until your deposit is "Available" you cannot receive interest.</h6>
+                    {% endif %}
+                    <form action="{% url 'accounts:pay' %}" method="get">
+                        <button type="submit" class="btn btn-primary btn-sm form-button">Deposit</button>
+                    </form>
+                    <h2>User Plans</h2>
+                    {% if user_plans %}
+                        <h6>Plan: {{ user_plans.plan }}</h6>
+                    {% else %}
+                        <li>No plan available</li>
+                    {% endif %}
+                    <form action="{% url 'accounts:update_plan' %}" method="get">
+                        <button type="submit" class="btn btn-primary btn-sm form-button">Update Plan</button>
+                    </form>
+                    <h2>Withdrawal Wallets</h2>
+                    <ul>
+                    {% if user_withdrawals %}
+                        {% for withdrawal in user_withdrawals %}
+                            <li>
+                                Wallet Name: {{ withdrawal.wallet_name }}<br>
+                                Wallet Address: {{ withdrawal.wallet_address }}
+                            </li>
+                        {% endfor %}
+                    {% else %}
+                        <li>No withdrawal wallets available</li>
+                    {% endif %}
+                    </ul>
+                    <form action="{% url 'accounts:update_withdrawal' %}" method="get">
+                        <button type="submit" class="btn btn-primary btn-sm form-button">Update Withdrawal</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="cryptohopper-web-widget" data-id="9" data-text_color="#ffffff" data-theme="custom" data-background_color="#5053ff" data-coins="bitcoin,ethereum,tether,cardano,bitcoin-cash,bitcoin-cash-sv,litecoin" data-multi_currencies="USD" data-realtime="on"></div>
+            </div>
+            <div class="col-md-6">
+                <div class="blue-box">
+                    <h1>User Details</h1>
+                    <p>Email: {{ email }}</p>
+                    <p>First Name: {{ first_name }}</p>
+                    <p>Last Name: {{ last_name }}</p>
+                    <p>Phone Number: {{ user_profile.phone_number }}</p>
+                    <p>Date of Birth: {{ user_profile.date_of_birth }}</p>
+                    <form action="{% url 'accounts:edit_profile' %}" method="get">
+                        <button type="submit" class="btn btn-primary btn-sm form-button">Update Profile</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+{% endblock %}
